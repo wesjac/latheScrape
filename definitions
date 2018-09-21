@@ -1,0 +1,48 @@
+#This prints the pricelist
+def print_lathe_pricelist(soup):
+	l = [x.string for x in (soup.find_all(attrs = {'class':'list-group-item'}))]
+	list = [str(x) for x in l]
+	pricelist = [x.strip('None') for x in list]
+	for y in pricelist:
+		print(y)
+
+#This returns the price list
+def get_lathe_pricelist(soup):
+	l = [x.string for x in (soup.find_all(attrs = {'class':'list-group-item'}))]
+	list = [str(x) for x in l]
+	pricelist = [x.strip('None') for x in list]
+	return pricelist
+
+#This requests from the site, converts it to text and makes it a BeautifulSoup Object
+def get_url(url):
+	r = requests.get(url)
+	r_html = r.text
+	soup = BeautifulSoup(r_html)
+	return soup
+
+#This returns the names of the lathes
+def get_lathe_name(soup):
+	l = [x.string for x in (soup.find_all(attrs = {'class':'small'}))]
+	list = [str(x) for x in l]
+	mainlist  = [x.strip('None') for x in list]
+	return mainlist
+
+#This just creates the list of prices
+def explicit_pricelist(pricelist):
+	templist = []
+	for x in range(1,39,3):					#Need to change this to suit any number of lathes
+		templist.append(pricelist[x])
+	return templist
+
+#This just creates the list of names of lathes
+def explicit_namelist(namelist):
+	templist = []
+	for x in range(0,37,3):
+		templist.append(namelist[x])
+	return templist
+
+#This is used to blend the two lists
+def mesh(lista, list1, list2):
+	for x in range(len(list1)):
+		lista.append(list1[x])
+		lista.append(list2[x])
